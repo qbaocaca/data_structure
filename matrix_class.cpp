@@ -1,6 +1,7 @@
 #include <iostream>
 #include "matrix.h"
 #include <stack>
+#include <cstdlib>
 
 using namespace std;
 
@@ -127,6 +128,47 @@ Matrix &Matrix::operator=(const Matrix &other)
     this->rows = other.rows;
     this->cols = other.cols;
     return *this;
+}
+
+void Matrix::create_identity(int size)
+{
+    this->rows = this->cols = size;
+    allocate_(this->A, this->rows, this->cols);
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            if (i == j)
+            {
+                this->A[i].setElement(j, 1);
+            }
+            else
+            {
+                this->A[i].setElement(j, 0);
+            }
+        }
+    }
+}
+
+void Matrix::create_celeb_test(int size)
+{
+    this->rows = this->cols = size;
+    allocate_(this->A, this->rows, this->cols);
+    for (int i = 0; i < size; i++)
+    {
+        for (int j = 0; j < size; j++)
+        {
+            if (i == j)
+            {
+                this->A[i].setElement(j, 0);
+            }
+            else
+            {
+                int x = rand() % 2;
+                this->A[i].setElement(j, x);
+            }
+        }
+    }
 }
 
 int Matrix::view_rows()

@@ -29,6 +29,8 @@ public:
 
     Matrix(const Matrix &other);
     Matrix &operator=(const Matrix &other);
+    void create_identity(int);
+    void create_celeb_test(int);
 
     int view_rows();
     int view_cols();
