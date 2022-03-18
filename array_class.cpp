@@ -25,7 +25,8 @@ Array::~Array()
 Array::Array(int num_elements)
 {
     allocate(this->A, num_elements);
-    this->na = num_elements;
+    this->na = 0;
+    this->capacity_a = num_elements;
 }
 
 void Array::insert(int x)

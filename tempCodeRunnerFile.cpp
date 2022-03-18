@@ -1,2 +1,2 @@
-#include "queue.h"
-// #include "queue_class.cpp"
+cout << endl
+    //      << isComplete(a);
