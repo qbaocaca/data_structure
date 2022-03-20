@@ -14,7 +14,8 @@ void Array::deepcopy(const Array &a)
 Array::Array()
 {
     allocate(this->A, 1);
-    this->A[0] = 0;
+    this->na = 0;
+    this->capacity_a = 1;
 }
 
 Array::~Array()
@@ -79,6 +80,8 @@ void Array::print()
 
 Array &Array::operator=(const Array &other)
 {
+    delete_(this->A);
+    allocate(this->A, other.na);
     this->deepcopy(other);
     return *this;
 }

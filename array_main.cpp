@@ -8,16 +8,16 @@ void input(Array &, int &);
 
 int main()
 {
-    // Array a;
-    // int x;
-    // while (true)
-    // {
-    //     cin >> x;
-    //     if (x == 0)
-    //         break;
-    //     a.insert(x);
-    // }
-    // a.print();
+    Array a;
+    int x;
+    while (true)
+    {
+        cin >> x;
+        if (x == 0)
+            break;
+        a.insert(x);
+    }
+    a.print();
 
     // int m;
     // cin >> m;
@@ -64,6 +64,15 @@ int main()
     // Array a(5);
     // cin >> a;
     // cout << a << endl;
+
+    Array c;
+    // c = a;
+    for (int i = 0; i < 10000000; i++)
+    {
+        c = a;
+    }
+    cout << endl;
+    c.print();
 
     return 0;
 }
