@@ -17,6 +17,14 @@ void insertAfter(node **list, node *p, int x);
 void delete_(node **list, int x);
 void deletefirst(node **list);
 void deletelast(node **list);
+void reverse(node **list);
+void printalternate(node *list);
+node *removeAfter(node **list, node *p);
+void addAfter(node **list, node *e, node *q);
+void insertionsort(node **list);
+void mergersort(node **list);
+void merge(node **l1, node **l2, node **list);
+void partition(node **list, node **l1, node **l2);
 
 int main()
 {
@@ -54,13 +62,52 @@ int main()
     // delete_(&LIST, x);
     // printlist(LIST);
 
-    deletefirst(&LIST);
+    // deletefirst(&LIST);
+    // cout << endl;
+    // printlist(LIST);
+    // deletelast(&LIST);
+    // cout << endl;
+    // printlist(LIST);
+
     cout << endl;
-    printlist(LIST);
-    deletelast(&LIST);
-    cout << endl;
+    // reverse(&LIST);
+    // printlist(LIST);
+    // printalternate(LIST);
+    // insertionsort(&LIST);
+    mergersort(&LIST);
     printlist(LIST);
 
+    // cin >> x;
+    // node *temp = LIST;
+    // while (temp != NULL)
+    // {
+    //     if (temp->info == x)
+    //         break;
+    //     temp = temp->next;
+    // }
+
+    // node *e = new node;
+    // cin >> x;
+    // e->info = x;
+    // e->next = NULL;
+
+    // node *e = removeAfter(&LIST, temp);
+    // addAfter(&LIST, e, temp);
+    // printlist(LIST);
+
+    // node *l1, *l2;
+    // partition(&LIST, &l1, &l2);
+    // printlist(l1);
+    // cout << endl;
+    // printlist(l2);
+    // printlist(LIST);
+    // node *l3, *l4, *l5, *l6;
+    // partition(&l1, &l3, &l4);
+    // merge(&l3, &l4, &l1);
+    // partition(&l2, &l5, &l6);
+    // merge(&l5, &l6, &l2);
+    // merge(&l1, &l2, &LIST);
+    // printlist(LIST);
     return 0;
 }
 
@@ -96,7 +143,10 @@ void printlist(node *list)
 {
     while (list != NULL)
     {
-        cout << list->info << " ";
+        if (list->next == NULL)
+            cout << list->info;
+        else
+            cout << list->info << " ";
         list = list->next;
     }
 }
@@ -223,4 +273,159 @@ void deletelast(node **list)
     }
     btemp->next = temp->next;
     delete[] temp;
+}
+
+void reverse(node **list)
+{
+    node *prev = NULL;
+    node *next = NULL;
+    node *curr = *list;
+
+    while (curr != NULL)
+    {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+
+    *list = prev;
+}
+
+void printalternate(node *list)
+{
+    if (list == NULL)
+        return;
+    cout << list->info << " ";
+
+    if (list->next != NULL)
+    {
+        printalternate(list->next->next);
+    }
+}
+
+node *removeAfter(node **list, node *p)
+{
+    if (p->next == NULL)
+        return NULL;
+    node *temp = *list;
+    while (temp->next != NULL)
+    {
+        if (temp == p)
+            break;
+        temp = temp->next;
+    }
+    node *e;
+    e = temp->next;
+    temp->next = temp->next->next;
+    e->next = NULL;
+    return e;
+}
+
+void addAfter(node **list, node *e, node *q)
+{
+    if (q == NULL)
+    {
+        e->next = *list;
+        *list = e;
+    }
+    else
+    {
+        node *temp = *list;
+        while (temp != NULL)
+        {
+            if (temp == q)
+                break;
+            temp = temp->next;
+        }
+        e->next = temp->next;
+        temp->next = e;
+    }
+}
+
+void insertionsort(node **list)
+{
+    node *i = *list, *k, *e, *q;
+    while (i->next != NULL)
+    {
+        q = NULL;
+        k = *list;
+        e = removeAfter(list, i);
+
+        while (k != i->next)
+        {
+            if (k->info >= e->info)
+                break;
+            q = k;
+            k = q->next;
+        }
+        addAfter(list, e, q);
+        if (i->next == e)
+            i = i->next;
+    }
+}
+
+void mergersort(node **list)
+{
+    if (*list == NULL)
+        return;
+    node *l1, *l2;
+    partition(list, &l1, &l2);
+    mergersort(&l1); // didn't work when having this :(
+    mergersort(&l2);
+    merge(&l1, &l2, list);
+}
+
+void partition(node **list, node **l1, node **l2)
+{
+    *l1 = NULL;
+    *l2 = NULL;
+    int lane = 0;
+    while (*list != NULL)
+    {
+        node *p = *list;
+        *list = p->next;
+        p->next = NULL;
+        if (lane)
+            add_tail(l2, p->info);
+        else
+            add_tail(l1, p->info);
+        lane = !lane;
+    }
+}
+
+void merge(node **l1, node **l2, node **list)
+{
+    node *p;
+    while (*l1 && *l2)
+    {
+        if ((*l1)->info < (*l2)->info)
+        {
+            p = *l1;
+            *l1 = (*l1)->next;
+        }
+        else
+        {
+            p = *l2;
+            *l2 = (*l2)->next;
+        }
+        p->next = NULL;
+        add_tail(list, p->info);
+    }
+
+    while (*l1)
+    {
+        p = *l1;
+        *l1 = (*l1)->next;
+        p->next = NULL;
+        add_tail(list, p->info);
+    }
+
+    while (*l2)
+    {
+        p = *l2;
+        *l2 = (*l2)->next;
+        p->next = NULL;
+        add_tail(list, p->info);
+    }
 }

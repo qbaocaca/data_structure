@@ -142,6 +142,7 @@ int main()
 
     a.dequeue().dequeue();
     a.enqueue(100).enqueue(200);
+    a.enqueue(300);
 
     cout << endl;
     a.display();

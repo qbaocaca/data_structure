@@ -23,25 +23,61 @@ bool cirqueue::isFull()
     return 0;
 }
 
+// cirqueue &cirqueue::enqueue(int x)
+// {
+//     if (isFull())
+//         cout << "Queue Full";
+//     else if (this->front == -1)
+//         this->front = 0;
+//     this->rear = (this->rear + 1) % this->size;
+//     this->A[this->rear] = x;
+//     return *this;
+// }
+
 cirqueue &cirqueue::enqueue(int x)
 {
     if (isFull())
+    {
         cout << "Queue Full";
-    else if (this->front == -1)
+        return *this;
+    }
+
+    if (this->front == -1)
         this->front = 0;
-    this->rear = (this->rear + 1) % this->size;
+
+    if (this->rear == this->size - 1 && this->front != 0)
+    {
+        this->rear = -1;
+    }
+    this->rear++;
     this->A[this->rear] = x;
     return *this;
 }
 
+// cirqueue &cirqueue::dequeue()
+// {
+//     if (isEmpty())
+//         cout << "Queue Empty";
+//     else if (this->front == this->rear)
+//         this->front = this->rear = -1;
+//     else
+//         this->front = (this->front + 1) % this->size;
+//     return *this;
+// }
+
 cirqueue &cirqueue::dequeue()
 {
-    if (isEmpty())
+    if (this->isEmpty())
+    {
         cout << "Queue Empty";
-    else if (this->front == this->rear)
+        return *this;
+    }
+
+    this->front++;
+    if (this->front == this->rear)
         this->front = this->rear = -1;
-    else
-        this->front = (this->front + 1) % this->size;
+    else if (this->front == this->size - 1)
+        this->front = 0;
     return *this;
 }
 
