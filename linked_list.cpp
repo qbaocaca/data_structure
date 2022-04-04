@@ -25,6 +25,9 @@ void insertionsort(node **list);
 void mergersort(node **list);
 void merge(node **l1, node **l2, node **list);
 void partition(node **list, node **l1, node **l2);
+void count_frequency(node *list);
+void remove_duplicate(node **list);
+void erase_duplicate(node **list);
 
 int main()
 {
@@ -38,6 +41,12 @@ int main()
         // add_head(&LIST, x);
         add_tail(&LIST, x);
     }
+    printlist(LIST);
+
+    cout << endl;
+    // count_frequency(LIST);
+    // remove_duplicate(&LIST);
+    erase_duplicate(&LIST);
     printlist(LIST);
 
     // insertAfter
@@ -69,13 +78,13 @@ int main()
     // cout << endl;
     // printlist(LIST);
 
-    cout << endl;
+    // cout << endl;
     // reverse(&LIST);
     // printlist(LIST);
     // printalternate(LIST);
     // insertionsort(&LIST);
-    mergersort(&LIST);
-    printlist(LIST);
+    // mergersort(&LIST);
+    // printlist(LIST);
 
     // cin >> x;
     // node *temp = LIST;
@@ -427,5 +436,93 @@ void merge(node **l1, node **l2, node **list)
         *l2 = (*l2)->next;
         p->next = NULL;
         add_tail(list, p->info);
+    }
+}
+
+void count_frequency(node *list)
+{
+    node *p = list;
+    while (p != NULL)
+    {
+        node *p1 = list;
+        while (p1 != p)
+        {
+            if (p->info == p1->info)
+                break;
+            p1 = p1->next;
+        }
+
+        if (p1 == p)
+        {
+            int count = 1;
+            node *q = p->next;
+            while (q != NULL)
+            {
+                if (q->info == p->info)
+                    count++;
+                q = q->next;
+            }
+            cout << p->info << ": " << count << endl;
+        }
+        p = p->next;
+    }
+}
+
+void remove_duplicate(node **list) // only consecutive duplicates
+{
+    node *t1, *t2;
+    t1 = *list;
+    if (t1 != NULL)
+        t2 = t1->next;
+    else
+        return;
+    if (t2 == NULL)
+        return;
+    while (t2 != NULL)
+    {
+        if (t1->info != t2->info)
+        {
+            t1->next = t2;
+            t1 = t2;
+        }
+        t2 = t2->next;
+    }
+    t1->next = NULL;
+}
+
+void erase_duplicate(node **list)
+{
+    node *p = *list;
+    node *bp = NULL;
+    while (p != NULL)
+    {
+        node *p1 = *list;
+        while (p1 != p)
+        {
+            if (p1->info == p->info)
+                break;
+            p1 = p1->next;
+        }
+
+        node *temp = p;
+        if (p1 != p)
+        {
+            p = p->next;
+            if (temp->next == NULL) // if temp is the last node
+            {
+                bp->next = NULL;
+            }
+            else
+            {
+                bp->next = temp->next;
+                temp->next = NULL;
+            }
+            delete[] temp;
+        }
+        else
+        {
+            bp = p;
+            p = p->next;
+        }
     }
 }
