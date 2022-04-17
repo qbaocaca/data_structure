@@ -208,3 +208,87 @@ ostream &operator<<(ostream &out, Matrix a)
     }
     return out;
 }
+
+// Matrix &Matrix::operator+(const Matrix &other)
+// {
+//     if (this->rows != other.rows || this->cols != other.cols)
+//         return *this;
+//     for (int i = 0; i < this->rows; i++)
+//     {
+//         for (int j = 0; j < this->cols; j++)
+//         {
+//             int temp = this->A[i].getElement(j) + other.A[i].getElement(j);
+
+//             this->A[i].setElement(j, temp);
+//         }
+//     }
+//     return *this;
+// }
+
+Matrix &Matrix::operator-(const Matrix &other)
+{
+    if (this->rows != other.rows || this->cols != other.cols)
+        return *this;
+    for (int i = 0; i < this->rows; i++)
+    {
+        for (int j = 0; j < this->cols; j++)
+        {
+            int temp = this->A[i].getElement(j) - other.A[i].getElement(j);
+
+            this->A[i].setElement(j, temp);
+        }
+    }
+    return *this;
+}
+
+int Matrix::getElement(int rows, int cols)
+{
+    return this->A[rows].getElement(cols);
+}
+
+void Matrix::setElement(int rows, int cols, int value)
+{
+    return this->A[rows].setElement(cols, value);
+}
+
+Matrix operator+(Matrix m1, Matrix m2)
+{
+    Matrix a(m1.view_rows(), m1.view_cols());
+    if (m1.view_rows() != m2.view_rows() || m1.view_cols() != m2.view_cols())
+    {
+        cout << "Mismatched dimensions!" << endl;
+    }
+    else
+    {
+        for (int i = 0; i < m1.view_rows(); i++)
+        {
+            for (int j = 0; j < m1.view_cols(); j++)
+            {
+                int temp = m1.getElement(i, j) + m2.getElement(i, j);
+                a.setElement(i, j, temp);
+            }
+        }
+    }
+    return a;
+}
+
+Matrix operator*(Matrix m1, Matrix m2)
+{
+    if (m1.view_cols() == m2.view_rows())
+    {
+        Matrix a(m1.view_rows(), m2.view_cols());
+        for (int i = 0; i < m1.view_rows(); i++)
+        {
+            for (int j = 0; j < m2.view_cols(); j++)
+            {
+                for (int k = 0; k < m1.view_cols(); k++)
+                {
+                    int temp = a.getElement(i, j);
+                    int product = m1.getElement(i, k) * m2.getElement(k, j);
+                    a.setElement(i, j, temp + product);
+                }
+            }
+        }
+        return a;
+    }
+}

@@ -20,41 +20,41 @@ void display(node *t);
 
 int main()
 {
-    node *t = new node;
-    t = NULL;
-    int x;
-    while (1)
-    {
-        cin >> x;
-        if (x == 0)
-            break;
-        insert(t, x);
-    }
-    lnr(t);
-    cout << endl;
+    // node *t = new node;
+    // t = NULL;
+    // int x;
+    // while (1)
+    // {
+    //     cin >> x;
+    //     if (x == 0)
+    //         break;
+    //     insert(t, x);
+    // }
+    // lnr(t);
+    // cout << endl;
     // cout << "num nodes=" << countnode(t);
     // int h = 0;
     // cal_height(t, 0, h);
     // cout << "h=" << h;
-    cout << "isbalance: ";
-    if (isbalance(t))
-        cout << "YES" << endl;
-    else
-        cout << "NO" << endl;
-    display(t);
-    cout << endl;
-    node *t1 = new node;
-    t1 = NULL;
-    t1 = buildBalancedTree(t);
-    cout << endl;
-    lnr(t1);
-    cout << endl;
-    cout << "isbalance: ";
-    if (isbalance(t1))
-        cout << "YES" << endl;
-    else
-        cout << "NO" << endl;
-    display(t1);
+    // cout << "isbalance: ";
+    // if (isbalance(t))
+    //     cout << "YES" << endl;
+    // else
+    //     cout << "NO" << endl;
+    // display(t);
+    // cout << endl;
+    // node *t1 = new node;
+    // t1 = NULL;
+    // t1 = buildBalancedTree(t);
+    // cout << endl;
+    // lnr(t1);
+    // cout << endl;
+    // cout << "isbalance: ";
+    // if (isbalance(t1))
+    //     cout << "YES" << endl;
+    // else
+    //     cout << "NO" << endl;
+    // display(t1);
 
     // int size = countnode(t);
     // int *a = new int[size];
@@ -68,6 +68,32 @@ int main()
     //     else
     //         cout << a[i] << " ";
     // }
+
+    node *t = new node;
+    t = NULL;
+    int x;
+    while (1)
+    {
+        cin >> x;
+        if (x == 0)
+            break;
+        insert(t, x);
+        if (!isbalance(t))
+        {
+            cout << "tree unbalanced when insert node " << x;
+            cout << ", make balance!" << endl;
+            node *temp = new node;
+            temp = NULL;
+            temp = buildBalancedTree(t);
+            t = NULL;
+            t = temp;
+        }
+    }
+    if (isbalance(t))
+        cout << "YES" << endl;
+    else
+        cout << "NO" << endl;
+
     return 0;
 }
 

@@ -32,8 +32,13 @@ public:
     void create_identity(int);
     void create_celeb_test(int);
 
+    // Matrix &operator+(const Matrix &other);
+    Matrix &operator-(const Matrix &other);
+
     int view_rows();
     int view_cols();
+    int getElement(int, int);
+    void setElement(int, int, int);
     bool knows(int, int);
 
     friend istream &operator>>(istream &in, Matrix &a);
