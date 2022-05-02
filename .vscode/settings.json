@@ -5,6 +5,7 @@
         "iosfwd": "cpp",
         "new": "cpp",
         "system_error": "cpp",
-        "typeinfo": "cpp"
+        "typeinfo": "cpp",
+        "vector": "cpp"
     }
 }
